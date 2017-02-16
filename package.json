@@ -7,9 +7,13 @@
     "System",
     "Ract"
   ],
+  "main": "./server.js",
   "scripts": {
     "prestart": "node_modules/.bin/webpack",
-    "start": "node_modules/.bin/webpack-dev-server"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "webpack-dev-server --hot --inline",
+    "postinstall": "webpack -p --config webpack.prod.config.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +27,10 @@
   "license": "MIT",
   "contributors": [],
   "dependencies": {
+    "babel-core": "^6.7.6",
+    "babel-loader": "^6.3.2",
+    "babel-preset-react": "^6.23.0",
+    "express": "^4.14.1",
     "isomorphic-fetch": "^2.2.1",
     "minimist": "^1.2.0",
     "react": "^15.4.2",
@@ -31,13 +39,14 @@
     "react-redux": "^5.0.2",
     "react-router": "^3.0.2",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "socket.io": "^1.7.2",
+    "webpack-dev-middleware": "^1.10.0",
+    "webpack-hot-middleware": "^2.17.0"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
     "babel-cli": "^6.22.2",
-    "babel-loader": "^6.2.10",
-    "babel-preset-latest": "^6.22.0",
     "babel-preset-react": "^6.22.0",
     "babel-preset-stage-0": "^6.22.0",
     "css-loader": "^0.26.1",
