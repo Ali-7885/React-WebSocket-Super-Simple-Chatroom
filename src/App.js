@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import User from './User'
 import Message from './Message'
 import io from 'socket.io-client'
-// import logo from './img/logo.svg';
 import './sass/App.scss';
 
 class App extends Component {
@@ -13,7 +12,7 @@ class App extends Component {
         messages:[],
         users:[],
         user:'',
-        massage: '',
+        message: '',
         socket:io('http://localhost:3000')
       }
       this.handleUserChange = this.handleUserChange.bind(this)
@@ -24,20 +23,18 @@ class App extends Component {
 
   componentDidMount() {
     this.state.socket.on(`new-mesage`, data => {
-          // this.setState({ messages : [data] })
+          var tempMsg=this.state.messages;
+          tempMsg.push(data);
           this.setState((prevState, props) => ({
             // messages : [...prevState.messages + data]
-              messages : [ data]
+              messages : tempMsg
           }))
     })
 
     this.state.socket.on(`get-users`, data => {
-          // this.setState({ messages : [data] })
-          console.log(data)
           this.setState((prevState, props) => ({
-            // messages : [...prevState.messages + data]
               users : data
-          }))
+            }))
     })
   }
 
@@ -52,13 +49,14 @@ class App extends Component {
   }
 
   handleMessageChange(event) {
-    this.setState({massage: event.target.value})
+    this.setState({message: event.target.value})
   }
 
   handleMessageSubmit(event) {
     event.preventDefault()
-    this.state.socket.emit('send-message',  this.state.massage)
-    this.setState({massage: ''})
+    this.state.socket.emit('send-message',  this.state.message)
+    this.setState({message: ' '})
+    event.target.value=''
   }
 
   render() {
@@ -66,7 +64,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
 
-          <h2>Welcome Super Simple Chat Application</h2>
+          <h2>Welcome to Super Simple Chat Application<small> by MAVAJ SUN CO</small></h2>
         </div>
 
         {!this.state.showChatRoom &&
@@ -94,28 +92,18 @@ class App extends Component {
                 <h1>Online Users </h1>
                 <ul className="list-group" id="users">
 
-                {this.state.users.map(
-                 (data, i) =>
-                //  console.log(data)
-                 <User  key={i+'U'} username={data}/>
-
-                )}
+                {this.state.users.map((data, i) => <User  key={i+'U'} username={data}/>)}
                 </ul>
               </div>
             </div>
             <div className="col-md-8">
               <div className="chat" id="chat">
-                {this.state.messages.map(
-                 (data, i) =>
-                //  console.log(data)
-                 <Message  key="i" {...data}/>
-
-              )}
+                {this.state.messages.map((data, i) =><Message  key={i+'U'}  {...data}/>)}
               </div>
               <form id="messageForm" onSubmit={this.handleMessageSubmit}>
                 <div className="from-group">
                   <lable>Enter Message</lable>
-                  <textarea className="form-control" id="message" value={this.state.value} onChange={this.handleMessageChange} />
+                  <textarea className="form-control" id="message" value={this.state.message} onChange={this.handleMessageChange} />
                   <br/>
                   <input type="submit" className="btn btn-primary" value="Send message" />
                 </div>
@@ -128,6 +116,5 @@ class App extends Component {
     );
   }
 }
-
 
 export default App;
