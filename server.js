@@ -38,16 +38,31 @@ app.get('/', function(request, response) {
 //   }
 // })
 
-
-
 io.sockets.on('connection',function(socket){
   connections.push(socket)
   console.log('connection : %s sockets connected',connections.length)
 
   //Disconnected
   socket.on('disconnect',function(data){
+    users.splice(users.indexOf(socket.username),1)
+    updateUsernames()
     connections.splice(connections.indexOf(socket),1)
     console.log('Disconnected : %s sockets connected',connections.length)
   })
 
+  socket.on('send-message',function(data){
+    // console.log(data)
+    io.sockets.emit('new-mesage',{user:socket.username,msg:data})
+  })
+
+  socket.on('new-user',function(data,callback){
+    socket.username=data
+    users.push(socket.username)
+    updateUsernames();
+    // console.log('new-user : '+data)
+  })
+
+  function updateUsernames(){
+    io.sockets.emit('get-users',users)
+  }
 })
