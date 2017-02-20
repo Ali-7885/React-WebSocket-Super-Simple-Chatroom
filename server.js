@@ -9,7 +9,8 @@ var PORT = process.env.PORT || 3000
 users=[]
 connections=[]
 
-server.listen(PORT)
+// server.listen(PORT)
+
 console.log('Server is running.....')
 
 // using webpack-dev-server and middleware in development environment
@@ -26,17 +27,21 @@ if(process.env.NODE_ENV !== 'production') {
 
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.get('/test', function(request, response) {
+  response.status(200).send('ok')
+})
+
 app.get('/', function(request, response) {
   response.sendFile(__dirname + '/public/index.html')
 })
 
-// app.listen(PORT, function(error) {
-//   if (error) {
-//     console.error(error);
-//   } else {
-//     console.info("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT);
-//   }
-// })
+var sever=server.listen(PORT, function(error) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.info("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT);
+  }
+})
 
 io.sockets.on('connection',function(socket){
   connections.push(socket)
@@ -66,3 +71,4 @@ io.sockets.on('connection',function(socket){
     io.sockets.emit('get-users',users)
   }
 })
+module.exports = server;
