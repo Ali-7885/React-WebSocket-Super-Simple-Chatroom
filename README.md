@@ -15,3 +15,8 @@ Then run the app like so:
   npm start
 ```
 And navigate to `localhost:3000` and chat !
+
+
+
+
+<iframe width="640" height="360" src="https://www.youtube-nocookie.com/embed/8VkhbBQGU8k" frameborder="0" allowfullscreen></iframe>
