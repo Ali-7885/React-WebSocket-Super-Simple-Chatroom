@@ -64,7 +64,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
 
-          <h2>Welcome to Super Simple Chat Application<small> by MAVAJ SUN CO</small></h2>
+          <h2>Welcome to Super Simple Chat Application<small> by WebChannel.DEV</small></h2>
         </div>
 
         {!this.state.showChatRoom &&

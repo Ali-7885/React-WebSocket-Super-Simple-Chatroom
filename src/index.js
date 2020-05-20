@@ -1,7 +1,7 @@
 /*
 The MIT License
 
-Copyright 1978-2017 MAVAJ SUN CO.
+Copyright 1978-2017 WebChannel.DEV
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
